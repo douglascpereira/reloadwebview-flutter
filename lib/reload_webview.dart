@@ -47,7 +47,7 @@ class _ReloadWebviewState extends State<ReloadWebview>
           ],
         ),
         body: WebView(
-          initialUrl: 'https://g1.globo.com/',
+          initialUrl: 'https://www.dropbox.com/pt_BR/',
           javascriptMode: JavascriptMode.unrestricted,
           onWebViewCreated: (WebViewController webViewController) {
             _controller.complete(webViewController);
