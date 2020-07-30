@@ -9,28 +9,32 @@ class ReloadWebview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Reload webview in flutter")),
+      appBar: AppBar(
+        title: Text("Reload webview in flutter"),
+        actions: <Widget>[
+          FutureBuilder<WebViewController>(
+              future: _controller.future,
+              builder: (BuildContext context,
+                  AsyncSnapshot<WebViewController> controller) {
+                if (controller.hasData) {
+                  return FloatingActionButton(
+                    onPressed: () async {
+                      controller.data.reload();
+                    },
+                    child: const Icon(Icons.refresh),
+                  );
+                }
+                return Container();
+              }),
+        ],
+      ),
       body: WebView(
         initialUrl: 'https://flutter.dev',
         javascriptMode: JavascriptMode.unrestricted,
-          onWebViewCreated: (WebViewController webViewController) {
-            _controller.complete(webViewController);
-          },
+        onWebViewCreated: (WebViewController webViewController) {
+          _controller.complete(webViewController);
+        },
       ),
-      floatingActionButton: FutureBuilder<WebViewController>(
-        future: _controller.future,
-        builder: (BuildContext context,
-            AsyncSnapshot<WebViewController> controller) {
-          if (controller.hasData) {
-            return FloatingActionButton(
-              onPressed: () async {
-                controller.data.reload();
-              },
-              child: const Icon(Icons.refresh),
-            );
-          }
-          return Container();
-        }),
     );
   }
 }
